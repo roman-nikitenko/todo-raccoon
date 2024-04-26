@@ -20,7 +20,6 @@
       outline: none;
       font-size: 16px;
       padding: 0;
-      
     }
     
     .item {
@@ -28,6 +27,9 @@
       flex-wrap: wrap;
     }
     
+    &-error {
+      border: 1px solid red;
+    }
     
   }
 

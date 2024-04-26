@@ -7,12 +7,13 @@ import { editTodo, removeTodo, setLocalStorage } from '../redux/todo/todoSlice';
 import { useAppDispatch } from '../customHook/redux';
 
 type Props = {
-  todo: Todo
+  todo: Todo;
+  setIsError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const TodoItem: FC<Props> = ({ todo }) => {
-  const [editeField, setEditField] = useState<string>('')
-  const [editMode, setEditMode] = useState<boolean>(false)
+export const TodoItem: FC<Props> = ({ todo, setIsError }) => {
+  const [editeField, setEditField] = useState<string>('');
+  const [editMode, setEditMode] = useState<boolean>(false);
   
   const inputRef = useRef<HTMLInputElement>(null);
   
@@ -28,13 +29,22 @@ export const TodoItem: FC<Props> = ({ todo }) => {
     dispatch(setCompletedLocalStorage());
     dispatch(setLocalStorage());
   };
+  
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditField(e.target.value);
+    setIsError(false);
+  }
 
   const editHandler = (todo: Todo) => {
-    setEditField(todo.todo)
-    setEditMode(true)
+    setEditField(todo.todo);
+    setEditMode(true);
   };
   
   const closeEditHandler = () => {
+    if (editeField.trim() === '') {
+      setIsError(true)
+      return
+    }
     dispatch(editTodo({ idTodo: todo.id, newTitle: editeField }));
     setEditMode(false);
     dispatch(setLocalStorage());
@@ -45,11 +55,11 @@ export const TodoItem: FC<Props> = ({ todo }) => {
       { editMode ? 
         <input 
           ref={inputRef}
-          className="edit-input" 
+          className="edit-input"
           type='text'
           value={ editeField }
           onBlur={closeEditHandler}
-          onChange={(e) => setEditField(e.target.value)}
+          onChange={changeHandler}
           onKeyPress={(e) => {
             if (e.key === 'Enter') closeEditHandler();
           }}
