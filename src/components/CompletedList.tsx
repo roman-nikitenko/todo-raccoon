@@ -3,32 +3,32 @@ import { useAppDispatch, useAppSelector } from '../customHook/redux';
 import restoreSvg from '../assets/restore.svg';
 import binSvg from '../assets/bin.svg'
 import { setLocalStorage, setTodo } from '../redux/todo/todoSlice';
+import { removeTodoFromCompleted, setCompletedLocalStorage } from '../redux/completed/completedTodosSlice'
 import { Todo } from '../type/todo';
-import { removeTodoFromBin, setBinLocalStorage } from '../redux/bin/binSlice';
 
 
-export const BinList: React.FC = () => {
-  const { bin } = useAppSelector(state => state);
+export const CompletedList: React.FC = () => {
+  const { completedTodos } = useAppSelector(state => state);
   const dispatch = useAppDispatch();
   
   const restoreHandler = (todo: Todo) => {
     dispatch(setTodo(todo));
-    dispatch(removeTodoFromBin(todo.id));
-    dispatch(setBinLocalStorage());
+    dispatch(removeTodoFromCompleted(todo.id));
+    dispatch(setCompletedLocalStorage());
     dispatch(setLocalStorage());
   }
   
   const removeHandler = (todoId: number) => {
-    dispatch(removeTodoFromBin(todoId))
-    dispatch(setBinLocalStorage());
+    dispatch(removeTodoFromCompleted(todoId))
+    dispatch(setCompletedLocalStorage());
   }
   
   return (
     <div className="list">
-      {bin.map(todo => (
+      {completedTodos.map(todo => (
         <div className="list-item" key={`${todo.id} + ${todo}`}>
           {todo.todo}
-          <div className="">
+          <div className="navigation">
             <button onClick={() => restoreHandler(todo)}>
               <img src={restoreSvg} alt='restore button' />
             </button>

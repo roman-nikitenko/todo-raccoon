@@ -8,28 +8,29 @@ export const completedTodosSlice = createSlice({
   name:'completedTodos',
   initialState,
   reducers:{
-    addToBin: (todos, action: PayloadAction<Todo>) => {
+    addToCompleted: (todos, action: PayloadAction<Todo>) => {
       todos.push(action.payload)
     },
-    setBinLocalStorage: (todos) => {
-      localStorage.setItem('bin', JSON.stringify(todos))
+    setCompletedLocalStorage: (todos) => {
+      localStorage.setItem('bin', JSON.stringify(todos));
     },
-    getBinFromLocalStore: (todos, ) => {
-      const todosFromStore = localStorage.getItem('bin')
+    getCompletedFromLocalStore: (todos, ) => {
+      const todosFromStore = localStorage.getItem('bin');
 
       if (todosFromStore) {
         const binPars = JSON.parse(todosFromStore)
+        
         return todos = binPars;
       } else {
-        setBinLocalStorage();
+        setCompletedLocalStorage();
       }
     },
-    removeTodoFromBin: (state, action: PayloadAction<number>) => {
+    removeTodoFromCompleted: (state, action: PayloadAction<number>) => {
       return state.filter(todo => todo.id !== action.payload)
     }
   }
 });
 
-export const { addToBin, setBinLocalStorage, getBinFromLocalStore, removeTodoFromBin } = completedTodosSlice.actions
+export const { removeTodoFromCompleted,getCompletedFromLocalStore, setCompletedLocalStorage, addToCompleted } = completedTodosSlice.actions
 
 export default completedTodosSlice.reducer
