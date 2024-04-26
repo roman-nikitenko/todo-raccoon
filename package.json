@@ -1,6 +1,7 @@
 {
   "name": "untitled",
   "version": "0.1.0",
+  "homepage": "https://roman-nikitenko.github.io/todo-raccoon",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
@@ -12,6 +13,7 @@
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
     "classnames": "^2.5.1",
+    "gh-pages": "^6.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.1",
@@ -25,7 +27,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
